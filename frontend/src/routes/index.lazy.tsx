@@ -6,8 +6,6 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
 import AiHelp from "@/components/ai-help"
 import CustomEditor from "../components/custom-editor";
 
