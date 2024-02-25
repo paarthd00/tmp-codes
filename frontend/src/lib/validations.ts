@@ -1,5 +1,8 @@
-import * as zod from "zod";
+import * as z from "zod";
 
-export const email = zod.string().email();
-export const password = zod.string().min(8).max(100);
-// ... other validations
+export const email = z.string().email();
+export const password = z.string().min(8).max(100);
+
+export const aiPromptSchema = z.object({
+  prompt: z.string(),
+});

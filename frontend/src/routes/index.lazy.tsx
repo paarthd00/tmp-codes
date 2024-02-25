@@ -2,16 +2,17 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 
 import "../App.css";
 import {
-    ResizableHandle,
-    ResizablePanel,
-    ResizablePanelGroup,
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { ChatHistory } from "../components/chat-history";
-
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import AiHelp from "@/components/ai-help"
 import CustomEditor from "../components/custom-editor";
 
 export const Route = createLazyFileRoute("/")({
-    component: Index,
+  component: Index,
 });
 
 function Index() {
@@ -23,7 +24,7 @@ function Index() {
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel>
-          <ChatHistory />
+          <AiHelp />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
