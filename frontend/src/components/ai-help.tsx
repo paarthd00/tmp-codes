@@ -26,7 +26,7 @@ export default function AiHelp() {
   });
 
   const handleAIHelpSubmit = async (values: z.infer<typeof aiPromptSchema>) => {
-    const { prompt } = values;
+    // const { prompt } = values;
     try {
       // const aiResponse = await fetch("/api/completepost", {
       //   method: "POST",
