@@ -1,19 +1,22 @@
-import "./App.css";
+import { createLazyFileRoute } from "@tanstack/react-router";
 
+import "../App.css";
 import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
+    ResizableHandle,
+    ResizablePanel,
+    ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { ChatHistory } from "./components/chat-history";
-// import Chats from './components/chats'
-import Header from "./components/header";
+import { ChatHistory } from "../components/chat-history";
 
-import CustomEditor from "./components/custom-editor";
-function App() {
+import CustomEditor from "../components/custom-editor";
+
+export const Route = createLazyFileRoute("/")({
+    component: Index,
+});
+
+function Index() {
   return (
     <div className="w-[100vw] h-[100vh] flex justify-between">
-      <Header />
       <ResizablePanelGroup className="pt-[4rem]" direction="horizontal">
         <ResizablePanel>
           <CustomEditor />
@@ -26,5 +29,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
