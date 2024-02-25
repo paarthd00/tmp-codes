@@ -16,12 +16,7 @@ function App() {
   return (
     <div className="w-[100vw] h-[100vh] flex justify-between">
       <Header />
-      <ResizablePanelGroup className='pt-[2rem]' direction="horizontal">
-        <ResizablePanel>
-          <Chats />
-        </ResizablePanel>
-
-        <ResizableHandle />
+      <ResizablePanelGroup className='pt-[4rem]' direction="horizontal">
 
         <ResizablePanel>
           <CustomEditor />
