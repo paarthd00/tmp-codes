@@ -24,7 +24,7 @@ export default function AiHelp() {
       prompt: "",
     },
   });
-
+  //@ts-ignore
   const handleAIHelpSubmit = async (values: z.infer<typeof aiPromptSchema>) => {
     // const { prompt } = values;
     try {

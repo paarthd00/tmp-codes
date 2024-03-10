@@ -1,4 +1,4 @@
-import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 
 export default function CustomEditor() {
   return (

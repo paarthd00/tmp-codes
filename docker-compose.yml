@@ -1,0 +1,11 @@
+services:
+  proxy:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - '80:80'
+  web:
+    image: nginx    
+    volumes: 
+      - ./frontend/dist:/usr/share/nginx/html 
