@@ -2,9 +2,11 @@
 
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-
+import { useContext } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { LanguageContext } from "@/context";
+
 import {
   Command,
   CommandEmpty,
@@ -20,11 +22,11 @@ import {
 
 const frameworks = [
   {
-    value: "js",
+    value: "javascript",
     label: "JavaScript",
   },
   {
-    value: "py",
+    value: "python",
     label: "Python",
   },
   {
@@ -42,6 +44,8 @@ const frameworks = [
 ];
 
 export function LanguageSelect() {
+  const [language, setLanguage] = useContext(LanguageContext);
+
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
@@ -71,6 +75,7 @@ export function LanguageSelect() {
                 value={framework.value}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue);
+                  setLanguage(currentValue);
                   setOpen(false);
                 }}
               >

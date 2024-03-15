@@ -15,6 +15,9 @@ app.post("/openai/code", async (c) => {
   const { prompt } = await c.req.json();
   const { language } = await c.req.json();
 
+  console.log(prompt, language);
+
+
   const chatCompletion = await openai.chat.completions.create({
     messages: [
       {
@@ -28,6 +31,8 @@ app.post("/openai/code", async (c) => {
     ],
     model: "gpt-3.5-turbo",
   });
+
+
   return c.json({ message: chatCompletion.choices[0].message.content });
 });
 

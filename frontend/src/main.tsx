@@ -4,7 +4,7 @@ import "./index.css";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import { routeTree } from "./routeTree.gen";
-
+import { LanguageContext } from "./context";
 import {
   QueryClient,
   QueryClientProvider,
@@ -12,6 +12,8 @@ import {
 
 import { ThemeProvider } from "@/components/theme-provider.tsx";
 import { KindeProvider } from "@kinde-oss/kinde-auth-react";
+import { useState } from "react";
+
 const queryClient = new QueryClient();
 const router = createRouter({ routeTree });
 
@@ -36,10 +38,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         enableSystem
         disableTransitionOnChange
       >
+
+
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
         </QueryClientProvider>
       </ThemeProvider>
     </KindeProvider>
-  </React.StrictMode>,
+  </React.StrictMode >,
 );
