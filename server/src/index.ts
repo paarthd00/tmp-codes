@@ -2,8 +2,10 @@ import { Hono } from 'hono'
 
 const app = new Hono()
 
-app.get('/api', (c) => {
+app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
-export default app
+Bun.serve(app)
+
+// export default app
