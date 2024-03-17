@@ -8,18 +8,21 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { LanguageContext, EditorContext } from "@/context";
+import { LanguageContext, EditorContext, ChatContext } from "@/context";
 
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { aiPromptSchema } from "@/lib/validations";
-
+import { CurrentModeContext } from "@/context";
 
 export default function AiHelp() {
   const [language, setLanguage] = useContext(LanguageContext);
   const [code, setCode] = useContext(EditorContext);
+  const [chat, setChat] = useContext(ChatContext);
+  const [currentMode, setCurrentMode] = useContext(CurrentModeContext);
+
 
   const aiHelpForm = useForm<z.infer<typeof aiPromptSchema>>({
     resolver: zodResolver(aiPromptSchema),
@@ -30,8 +33,11 @@ export default function AiHelp() {
 
   const handleAIHelpSubmit = async (values: z.infer<typeof aiPromptSchema>) => {
     const { prompt } = values;
+    console.log(currentMode)
+    let requestEndPoint = currentMode === "editor" ? "code" : "chat";
+
     try {
-      const aiResponse = await fetch("/api/openai/code", {
+      const aiResponse = await fetch(`/api/openai/${requestEndPoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,10 +50,11 @@ export default function AiHelp() {
         }),
       }).then((response) => response.json());
 
-      setCode(aiResponse.message);
-      console.log(aiResponse.message);
-
-      // console.log(aiResponse.choices[0].text);
+      if (currentMode === "editor") {
+        setCode(aiResponse.message);
+      } else {
+        setChat(aiResponse.message);
+      }
 
     } catch (error) {
       alert("Error getting ai help");

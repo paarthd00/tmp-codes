@@ -7,8 +7,6 @@ export default function CustomEditor() {
 
   const [language, setLanguage] = useContext(LanguageContext);
   const [code, setCode] = useContext(EditorContext);
-  console.log({ language });
-  console.log({ code });
 
   const { theme } = useTheme();
   return (
