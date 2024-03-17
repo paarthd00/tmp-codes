@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/resizable";
 import AiHelp from "@/components/ai-help"
 import CustomEditor from "../components/custom-editor";
-
+import ResizableTabs from "../components/resizable-tabs";
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
@@ -18,7 +18,7 @@ function Index() {
     <div className="w-[100vw] h-[100vh] flex justify-between">
       <ResizablePanelGroup className="pt-[4rem]" direction="horizontal">
         <ResizablePanel>
-          <CustomEditor />
+          <ResizableTabs />
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel>

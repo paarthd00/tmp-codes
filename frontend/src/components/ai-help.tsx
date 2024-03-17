@@ -72,7 +72,7 @@ export default function AiHelp() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="btn bg-[#f0f0f0]">AI help</Button>
+          <Button type="submit" className="btn">AI help</Button>
         </form>
       </Form>
     </div>
