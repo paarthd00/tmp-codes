@@ -22,7 +22,7 @@ app.post("/openai/code", async (c) => {
         role: "user",
         content:
           prompt +
-          " please provide code nothing else, just code in" +
+          " please provide code nothing else, just code no other word, just code not even an extra word, code without using Markdown formatting, just code in" +
           language +
           " language",
       },
