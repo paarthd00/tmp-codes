@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import OpenAI from "openai";
 import { db } from "./db";
 import { users } from "./db/schema/user";
+import { chats } from "./db/schema/chat";
+
 import { eq } from "./db";
 const openai = new OpenAI({
   apiKey: process.env["OPENAI_API_KEY"], // This is the default and can be omitted
@@ -34,44 +36,92 @@ app.post("/login", async (c) => {
 });
 
 app.post("/openai/code", async (c) => {
-  const { prompt, language, context } = await c.req.json();
+  const { prompt, language, context, userId } = await c.req.json();
   const chatCompletion = await openai.chat.completions.create({
     messages: [
       {
         role: "user",
         content:
           prompt +
-          " please provide code nothing else, just code no other word, just code not even an extra word, code without using Markdown formatting, just code in" +
+          " please provide code nothing else, just code no other word, just code not even an extra word, code without using Markdown formatting, just code in " +
           language +
           " language " +
-          "based on this" +
+          "based on this " +
           context,
       },
     ],
     model: "gpt-3.5-turbo",
   });
 
-  return c.json({ message: chatCompletion.choices[0].message.content });
+  const chatCompletionResponse = chatCompletion.choices[0].message.content;
+
+  const user = await db
+    .select()
+    .from(users)
+    .where(eq(users.userId, userId))
+    .then((res) => res[0]);
+
+  if (chatCompletionResponse && user) {
+    await db.insert(chats).values({
+      prompt: prompt,
+      response: chatCompletionResponse,
+      chatUserId: user.id,
+    });
+  }
+
+  return c.json({ message: chatCompletionResponse });
 });
 
 app.post("/openai/chat", async (c) => {
-  const { prompt, context } = await c.req.json();
+  const { prompt, context, userId } = await c.req.json();
 
   const chatCompletion = await openai.chat.completions.create({
     messages: [
       {
         role: "user",
-        content: prompt + " Please explain this to me based on this" + context,
+        content: prompt + " Please explain this to me based on this " + context,
       },
     ],
     model: "gpt-3.5-turbo",
   });
 
+  const chatCompletionResponse = chatCompletion.choices[0].message.content;
+
+  const user = await db
+    .select()
+    .from(users)
+    .where(eq(users.userId, userId))
+    .then((res) => res[0]);
+
+  if (chatCompletionResponse && user) {
+    await db.insert(chats).values({
+      prompt: prompt,
+      response: chatCompletionResponse,
+      chatUserId: user.id,
+    });
+  }
   return c.json({ message: chatCompletion.choices[0].message.content });
 });
 
-app.get("/history", async (c) => {
-  // get history from db for user and return
+app.post("/chatHistory", async (c) => {
+  const { userId } = await c.req.json();
+
+  const user = await db
+    .select()
+    .from(users)
+    .where(eq(users.userId, userId))
+    .then((res) => res[0]);
+
+  if (!user) {
+    return c.json({ error: "User not found" });
+  }
+
+  const chatHistory = await db
+    .select()
+    .from(chats)
+    .where(eq(chats.chatUserId, user.id));
+
+  return c.json({ chatHistory });
 });
 
 app.post("/history/add", async (c) => {

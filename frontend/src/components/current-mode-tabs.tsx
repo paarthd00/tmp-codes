@@ -4,6 +4,8 @@ import { useContext } from "react"
 import { ChatContext } from "@/context"
 import { Button } from "./ui/button"
 import ReactMarkdown from 'react-markdown'
+import ChatHistory from "./chats"
+
 export default function CurrentModeTabs() {
     const [currentMode, setCurrentMode] = useContext(CurrentModeContext)
     const [chat, _] = useContext(ChatContext)
@@ -26,7 +28,7 @@ export default function CurrentModeTabs() {
             <div>
                 {currentMode === "editor" && <CustomEditor />}
                 {currentMode === "chat" && <ReactMarkdown>{chat}</ReactMarkdown>}
-                {currentMode === "history" && "History here."}
+                {currentMode === "history" && <ChatHistory />}
                 {currentMode === "git" && "Git here."}
             </div>
         </div>

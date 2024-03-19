@@ -1,18 +1,33 @@
-// import { useState } from "react";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
+import { useEffect, useState } from "react";
+export default function ChatHistory() {
+  const { user } = useKindeAuth();
+  const [chats, setChats] = useState<any[]>([]);
 
-export default function Chats() {
-  // const [activeChat, setActiveChat] = useState(0);
+  const getChats = async () => {
+    const response = await fetch("/api/chatHistory", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: user?.id }),
+    }).then((response) => response.json());
+    setChats(response.chatHistory);
+  }
 
-  const chats = ["chat 1", "chat 2", "chat 3"];
+  useEffect(() => {
+    getChats();
+  }, []);
+
+
 
   return (
     <div className="h-100">
-      <h6>Chats</h6>
 
       {chats?.map((chat) => {
         return (
-          <div key={chat} className="flex items-center gap-2">
-            <p>{chat}</p>
+          <div key={chat.id} className="flex items-center gap-2">
+            <p>{chat.prompt}</p>
           </div>
         );
       })}

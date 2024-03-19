@@ -7,8 +7,9 @@ CREATE TABLE IF NOT EXISTS "chats" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
 	"id" serial PRIMARY KEY NOT NULL,
+	"userId" text NOT NULL,
 	"username" text NOT NULL,
-	"userId" text NOT NULL
+	"email" text NOT NULL
 );
 --> statement-breakpoint
 DO $$ BEGIN

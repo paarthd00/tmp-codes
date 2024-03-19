@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { aiPromptSchema } from "@/lib/validations";
 import { CurrentModeContext } from "@/context";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 
 export default function AiHelp() {
   const [language, setLanguage] = useContext(LanguageContext);
@@ -23,6 +24,7 @@ export default function AiHelp() {
   const [chat, setChat] = useContext(ChatContext);
   const [currentMode, setCurrentMode] = useContext(CurrentModeContext);
 
+  const { user } = useKindeAuth();
 
   const aiHelpForm = useForm<z.infer<typeof aiPromptSchema>>({
     resolver: zodResolver(aiPromptSchema),
@@ -45,6 +47,7 @@ export default function AiHelp() {
         body: JSON.stringify({
           "language": language,
           "context": code ? code : chat || "",
+          userId: user?.id,
           "prompt": prompt,
           "MaxTokens": "60",
           "Temperature": "0.5"
