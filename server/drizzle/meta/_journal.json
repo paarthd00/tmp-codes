@@ -8,6 +8,13 @@
       "when": 1708861244317,
       "tag": "0000_classy_multiple_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1710883083620,
+      "tag": "0001_spooky_king_cobra",
+      "breakpoints": true
     }
   ]
 }

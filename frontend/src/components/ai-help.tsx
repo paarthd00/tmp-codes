@@ -44,6 +44,7 @@ export default function AiHelp() {
         },
         body: JSON.stringify({
           "language": language,
+          "context": code ? code : chat || "",
           "prompt": prompt,
           "MaxTokens": "60",
           "Temperature": "0.5"
